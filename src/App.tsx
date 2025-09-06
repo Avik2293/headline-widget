@@ -7,6 +7,8 @@ import { embedSnippet, fromBase64Config } from './utils/embed'
 
 
 export default function App() {
+
+  // initial state and URL sync
   const init = useMemo(() => {
     const qs = new URLSearchParams(location.search)
     const cfg = qs.get('config')
@@ -32,14 +34,14 @@ export default function App() {
 
 
   const settingsJson = JSON.stringify(settings, null, 2)
-  const snippet = embedSnippet('https://your-hosted-url.example', settings)
+  const snippet = embedSnippet('https://headline-widget-avik.netlify.app', settings)
 
 
   return (
     <div className="min-h-screen max-w-screen">
       <header className="sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/50 bg-neutral-950/80 border-b border-neutral-900">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
-          <div className="text-sm text-neutral-400">Headline Widget · React + TS + Tailwind + Framer Motion</div>
+          <div className="text-lg text-neutral-400">Headline Widget · React + TS + Tailwind + Framer Motion</div>
           {/* <a
             href="https://github.com/"
             target="_blank"
@@ -95,8 +97,6 @@ export default function App() {
               <div className='max-w-7xl'>
                 <code className="text-xs bg-neutral-950/70 rounded-xl p-3 block overflow-auto whitespace-pre">{snippet}</code>
               </div>
-
-              {/* <p className="text-xs text-neutral-400 mt-2">Replace <span className="font-mono">https://your-hosted-url.example</span> with your deployed URL (Vercel/Netlify). The current settings are encoded in the <span className="font-mono">config</span> query.</p> */}
             </section>
           </div>
         </aside>

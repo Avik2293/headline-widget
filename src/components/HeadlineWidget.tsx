@@ -39,7 +39,6 @@ export default function HeadlineWidget({ settings }: Props) {
 
     const words = useMemo(() => text.split(/\s+/), [text])
 
-
     const baseStyle: React.CSSProperties = {
         fontFamily,
         fontWeight,
@@ -49,13 +48,20 @@ export default function HeadlineWidget({ settings }: Props) {
         ...(gradientEnabled
             ? {
                 backgroundImage: `linear-gradient(${dirToDeg(gradientDirection)}, ${gradientFrom}, ${gradientTo})`,
-                WebkitBackgroundClip: 'text',
-                backgroundClip: 'text',
-                color: 'transparent',
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
             }
-            : { color: '#ffffff' }),
-        ...(textOutline ? ({ WebkitTextStroke: '1px rgba(255,255,255,0.3)' } as any) : {}),
-    }
+            : { color: "#ffffff" }),
+        ...(textOutline ? ({ WebkitTextStroke: "1px rgba(255,255,255,0.3)" } as any) : {}),
+        ...(hoverGlow
+            ? {
+                // keep filter string constant; animate --glow instead
+                filter: "drop-shadow(0 0 calc(12px * var(--glow)) rgba(255,255,255,0.85))",
+                ["--glow" as any]: 0, // TS-friendly
+            }
+            : {}),
+    };
 
 
     const letterVar: Variants = {
@@ -73,10 +79,11 @@ export default function HeadlineWidget({ settings }: Props) {
     };
 
 
+    const hoverVariants: Variants = {
+        rest: { ["--glow" as any]: 0, transition: { duration: 0.25, ease: "easeOut" } },
+        hover: { ["--glow" as any]: 1, transition: { duration: 0.25, ease: "easeIn" } },
+    };
 
-    const containerVar = {
-        hover: hoverGlow ? { filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.7))' } : {},
-    }
 
 
     // Render either per-letter or per-word with segment styles
@@ -87,16 +94,24 @@ export default function HeadlineWidget({ settings }: Props) {
                 className="tracking-tight select-text"
                 style={baseStyle}
                 // initial="init"
+                initial="rest"
                 whileHover="hover"
                 // animate="animate"
-                variants={containerVar}
+                animate="rest"
+                variants={hoverGlow ? hoverVariants : {}}
             >
                 {letters.map((ch, i) => (
                     ch === ' ' ? (
                         <span key={i}>&nbsp;</span>
                     ) : (
-                        <motion.span key={i} custom={i} variants={letterVar} initial="init"
-                            animate="animate" className="inline-block">
+                        <motion.span
+                            key={i}
+                            custom={i}
+                            variants={letterVar}
+                            initial="init"
+                            animate="animate"
+                            className="inline-block"
+                        >
                             {ch}
                         </motion.span>
                     )
@@ -111,11 +126,13 @@ export default function HeadlineWidget({ settings }: Props) {
         <motion.h1
             className="tracking-tight select-text"
             style={baseStyle}
+            initial="rest"
+            animate="rest"
             whileHover="hover"
-            variants={containerVar}
+            variants={hoverGlow ? hoverVariants : {}}
         >
-            {words.map((w, i) => (
-                <span key={i} className={`inline ${segmentClass(segmentStyles[i] ?? 'none')} mr-2`}>{w}</span>
+            {words.map((word, i) => (
+                <span key={i} className={`inline ${segmentClass(segmentStyles[i] ?? 'none')} mr-2`}>{word}</span>
             ))}
         </motion.h1>
     )

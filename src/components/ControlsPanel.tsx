@@ -19,6 +19,7 @@ export default function ControlsPanel({ settings, onChange }: Props) {
 
     return (
         <div className="space-y-6">
+            {/* text input  */}
             <div>
                 <label className="block text-sm text-neutral-400 mb-1">Headline Text</label>
 
@@ -30,8 +31,9 @@ export default function ControlsPanel({ settings, onChange }: Props) {
                 />
             </div>
 
-
+            {/* text styles */}
             <div className="grid grid-cols-5 gap-4">
+                {/* Font Family */}
                 <div>
                     <label className="block text-sm text-neutral-400 mb-1">Font Family</label>
                     <select
@@ -45,6 +47,7 @@ export default function ControlsPanel({ settings, onChange }: Props) {
                     </select>
                 </div>
 
+                {/* Font Weight */}
                 <div>
                     <label className="block text-sm text-neutral-400 mb-1">Font Weight</label>
                     <select
@@ -59,6 +62,7 @@ export default function ControlsPanel({ settings, onChange }: Props) {
                     </select>
                 </div>
 
+                {/* Font Size */}
                 <div>
                     <label className="block text-sm text-neutral-400 mb-1">Font Size (px)</label>
                     <input type="number" min={12} max={160} value={settings.fontSize}
@@ -66,6 +70,7 @@ export default function ControlsPanel({ settings, onChange }: Props) {
                         className="w-full rounded-lg bg-neutral-900/60 border border-neutral-800 px-3 py-2" />
                 </div>
 
+                {/* Letter Spacing */}
                 <div>
                     <label className="block text-sm text-neutral-400 mb-1">Letter Spacing (px)</label>
                     <input type="number" step="0.5" value={settings.letterSpacing}
@@ -73,6 +78,7 @@ export default function ControlsPanel({ settings, onChange }: Props) {
                         className="w-full rounded-lg bg-neutral-900/60 border border-neutral-800 px-3 py-2" />
                 </div>
 
+                {/* Line Height */}
                 <div>
                     <label className="block text-sm text-neutral-400 mb-1">Line Height</label>
                     <input type="number" step="0.05" value={settings.lineHeight}
@@ -81,7 +87,7 @@ export default function ControlsPanel({ settings, onChange }: Props) {
                 </div>
             </div>
 
-
+            {/* Gradient */}
             <div className="space-y-3 rounded-xl border border-neutral-800 p-3">
                 <div className="flex items-center justify-between">
                     <div className="font-medium">Gradient</div>
@@ -119,7 +125,7 @@ export default function ControlsPanel({ settings, onChange }: Props) {
                 </div>
             </div>
 
-
+            {/* check boxs */}
             <div className="grid grid-cols-3 gap-4">
                 <label className="inline-flex items-center gap-2"><input type="checkbox" checked={settings.perLetterAnimation} onChange={e => update({ perLetterAnimation: e.target.checked })} /><span>Per-letter animation</span></label>
 
@@ -128,7 +134,7 @@ export default function ControlsPanel({ settings, onChange }: Props) {
                 <label className="inline-flex items-center gap-2"><input type="checkbox" checked={settings.textOutline} onChange={e => update({ textOutline: e.target.checked })} /><span>Text outline</span></label>
             </div>
 
-
+            {/* Word / Segment Styling */}
             <div className="space-y-2">
                 <div className="font-medium">Word / Segment Styling</div>
                 <div className="text-sm text-neutral-400">(active when per-letter animation is off)</div>
